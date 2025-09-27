@@ -2,7 +2,7 @@ package com.lld.problems.F_RateLimiter.entities;
 
 public class RateLimiter {
 
-    private Request request;
+    private final Request request;
   private int requestCount;
   private long windowStart;
 
@@ -12,19 +12,19 @@ public class RateLimiter {
     this.requestCount = 0;
   }
 
-  public synchronized boolean allowRequest() {
+  public boolean allowRequest() {
     long now = System.currentTimeMillis();
-
-    if (now - windowStart > request.timeSpanWindowInSec()) {
-      // Reset window
-      windowStart = now;
-      requestCount = 1;
-      return true;
-    } else if (requestCount < request.maxRequests()) {
-      requestCount++;
-      return true;
+    synchronized (this){
+      if (now - windowStart > request.timeSpanWindowInSec()) {
+        // Reset window
+        windowStart = now;
+        requestCount = 1;
+        return true;
+      } else if (requestCount < request.maxRequests()) {
+        requestCount++;
+        return true;
+      }
     }
-
     return false;
   }
 }

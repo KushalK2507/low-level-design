@@ -12,10 +12,10 @@ import java.util.Queue;
 public class SnakeAndLadderService {
 
   private static final int DEFAULTBOARDSIZE = 100;
-  private Board SnakeAndLadderBoard;
-  private Queue<Player> players;
+  private final Board SnakeAndLadderBoard;
+  private final Queue<Player> players;
   private int noOfPlayers;
-  private int size;
+  private final int size;
 
   SnakeAndLadderService(int size) {
     this.SnakeAndLadderBoard = new Board(size);
